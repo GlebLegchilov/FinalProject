@@ -36,7 +36,7 @@
     $('.userDel').submit(function (event) {
 
         event.preventDefault();
-
+        //comment
         var yes = confirm("Delete user?");
         if (yes) {
 
