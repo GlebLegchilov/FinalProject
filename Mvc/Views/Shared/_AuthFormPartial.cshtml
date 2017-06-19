@@ -1,0 +1,51 @@
+﻿
+        @model Mvc.Models.LogOnViewModel
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "auth" }))
+        {
+
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal" style="margin-left:30px">
+                <h4>Log on</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+        
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">Password</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                Remember me
+                            </label>
+                                @Html.EditorFor(model => model.RememberMe)
+                                @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="loginButton" type="submit" value="Login" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+
+

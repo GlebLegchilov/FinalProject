@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title – приложение ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/myscript")
+
+</head>
+<body>
+
+    <div class="navbar navbar-fixed-top">
+
+        <div class="container">
+            <div class="row">
+                <div class="site-navigation-inner col-sm-12">
+                    <div class="navbar navbar-default menu-affix affix-top" data-spy="affix" data-offset-top="187">
+                        <!-- <div class="navbar navbar-default"> -->
+                        <div class="navbar-header">
+
+                            @*<div><a class="navbar-brand" href="#" title="Keiko Lynn" rel="home"><img src="http://demo2.hollicewang.com/wp-content/uploads/2017/05/cropped-keikolynn_logo-1.png"></a></div>*@
+                        </div>
+
+                        <!-- The WordPress Menu goes here -->
+                        <nav id="navbar-collapse" class="collapse navbar-collapse">
+                            <ul id="main-menu" class="nav navbar-nav">
+                                <li>@Html.ActionLink("Main", "Index", "Home")</li>
+                                @*<li id="menu-item-7974" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-7974 dropdown">
+                                    <a title="Style" href="#" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">Lots category<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <li><a tabindex="-1" href="#">@Html.ActionLink("All lots", "Index", "Lot")</a></li>
+                                        <li><a tabindex="-1" href="#">Категория 1</a></li>
+                                        <li><a tabindex="-1" href="#"></a></li>
+                                    </ul>
+                                </li>*@
+                                <li id="menu-item-7972" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7972">@Html.ActionLink("All lots", "Index", "Lot")</li>
+                                <li id="menu-item-7972" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7972">@Html.ActionLink("Add lot", "CreateLot", "Lot")</li>
+                              
+                               
+                               
+                                
+                            </ul>
+                            <ul id="authReg">@Html.Partial("_LoginPartial")</ul>
+                        </nav>
+                    </div><!-- .navbar -->
+                </div>
+            </div>
+        </div><!-- .container -->
+
+    </div>
+
+    <div class="container body-content">
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </div>
+@if (!Request.IsAuthenticated)
+{
+    <div id = "myAuthModal" class="modal fade">
+        <div class="modal-dialog">
+            <div id = "authPart" class="modal-content">
+               @Html.Partial("_AuthFormPartial")
+            </div>
+        </div>
+    </div>
+
+    <div id = "myRegModal" class="modal fade">
+        <div class="modal-dialog">
+            <div  id = "regPart"  class="modal-content">
+
+            </div>
+        </div>
+    </div>
+}
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

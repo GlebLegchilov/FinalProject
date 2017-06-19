@@ -1,0 +1,25 @@
+﻿@*@User.Identity.IsAuthenticated*@
+@if ((Request.IsAuthenticated) || @ViewBag.Message != null)
+{
+    using (Html.BeginForm("LogOff", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Сabinet", "Cabinet", "Account")</li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right" id="authreg">
+
+        <li><a class="cd-signin" id="autButton" href="#0">Log in</a></li>
+        @*<li><a class="cd-signup" id="regButton" href="#0">Регистрация</a></li>*@
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+    </ul>
+}
+

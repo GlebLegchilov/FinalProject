@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Mvc.Models.UserViewModel>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Role)
+            </td>
+            <td>
+                @using (Html.BeginForm("DeleteUser", "Account", new { UserId = @item.Id} , FormMethod.Post, new { @class = "userDel"}))
+                {
+                    @Html.AntiForgeryToken()
+                    @*@Html.ActionLink("Delete", "DeleteUser", new { @class = "btn btn-danger", @id = item.Id })*@
+                    <input type="submit" class="btn btn-danger" value="Delete" />
+                }
+            </td>
+        </tr>
+    }
+</table>
+
