@@ -6,49 +6,12 @@
 
 <h2>@ViewBag.User.UserName</h2>
 @*<h2>@ViewBag.User.CreationDate</h2>*@
+@Html.ActionLink("My lots", "MyLots", "Lot")
 
 @if (User.IsInRole("Admin"))
 {
-<div id="users">
+<div id="users" >
     @Html.Partial("_UsersList")
 </div>
 }
 
-@*@if (ViewBag.PurshaseList != null)
-{
-<table class="table">
-    <tr>
-        <th>
-            <h3>Name</h3>
-        </th>
-        <th>
-            <h3>Date of purchase</h3>
-        </th>
-       
-        <th></th>
-    </tr>
-
-   
-    @foreach (Mvc.Models.LotViewModel lot in ViewBag.PurshaseList as IEnumerable<Mvc.Models.LotViewModel>)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(item => lot.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => lot.PurchaseDate)
-            </td>
-     
-            <td>
-                @using (Html.BeginForm("Details", "Lot", new { lotId = @lot.Id }, FormMethod.Post, null))
-                {
-                    @Html.AntiForgeryToken()
-                   
-                    <input type="submit" class="btn btn-danger" value="Delete" />
-                }
-            </td>
-        </tr>
-   
-    }
-</table>
-}*@

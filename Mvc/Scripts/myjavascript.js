@@ -8,12 +8,18 @@
         return false;
     });
 
+    //$("#regButton").click(function (event) {
+    //    event.preventDefault();
+
+    //    $('#myRegModal').modal('show');
+    //    return false;
+    //});
+
 
     $('#auth').submit(function (event) {
         
         event.preventDefault();
 
-        loginButton
         var $btn = $('#loginButton').button('loading')
 
         var data = $(this).serialize();
@@ -33,10 +39,34 @@
         return false;
     });
 
+    $('#reg').submit(function (event) {
+
+        event.preventDefault();
+
+        var $btn = $('#loginButton').button('loading')
+
+        var data = $(this).serialize();
+        var url = $(this).attr('action');
+        alert("zc");
+        $.post(url, data, function (response) {
+            if (response != "") {
+
+               
+                $("#myRegModal").modal('hide');
+                $('#regPart').empty();
+                $('#authReg').empty().prepend(response);
+            }
+            else {
+                alert("Incorrect login or password.");
+            }
+        });
+        $btn.button('reset')
+        return false;
+    });
+
     $('.userDel').submit(function (event) {
 
         event.preventDefault();
-        //comment
         var yes = confirm("Delete user?");
         if (yes) {
 
@@ -46,12 +76,58 @@
             var url = $(this).attr('action');
             
             $.post(url, data, function (response) {
-               
+                
                 $('#users').empty().prepend(response);
+            })
+            .fail(function() {
+                alert( "error" );
             });
+
+            
             $btn.button('reset')
         }
         return false;
+    });
+
+
+    $('.myLotDel').submit(function (event) {
+
+        event.preventDefault();
+        var yes = confirm("Delete lot?");
+        if (yes) {
+
+            var data = $(this).serialize();
+            var url = $(this).attr('action');
+
+            $.post(url, data, function (response) {
+
+                $('#myAddLots').empty().prepend(response);
+            })
+            .fail(function () {
+                alert("error");
+            });
+
+        }
+    });
+
+    $('.purchLotDel').submit(function (event) {
+
+        event.preventDefault();
+        var yes = confirm("Delete lot?");
+        if (yes) {
+
+            var data = $(this).serialize();
+            var url = $(this).attr('action');
+
+            $.post(url, data, function (response) {
+
+                $('#myPurchLots').empty().prepend(response);
+            })
+            .fail(function () {
+                alert("error");
+            });
+
+        }
     });
 
 

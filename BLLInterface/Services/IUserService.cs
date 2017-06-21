@@ -5,8 +5,11 @@ namespace BLLInterface.Services
 {
     public interface IUserService:IService<UserEntity>
     {
-        UserEntity GetUserEntityByName(string name);
+        UserEntity GetByName(string name);
+        int GetUserId(string name);
         void CreateUser(UserEntity user);
         void DeleteUser(UserEntity user);
+        bool Exist(string name);
+
     }
 }

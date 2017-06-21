@@ -10,7 +10,12 @@
             {
                 if (item.OwnerId == 0) { 
                 <div class="col-xs-12 col-md-6 col-lg-4">
-                 
+                    <div class="hidden">
+                        @Html.EditorFor(model => item.Id)
+                        @Html.EditorFor(model => item.CreatorId)
+                        @Html.EditorFor(model => item.OwnerId)
+                    </div>
+
                     <div class="card" style="word-wrap: break-word; overflow: hidden;"height: 100px;">
                         @if (item.Img != null)
                         {

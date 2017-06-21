@@ -21,6 +21,24 @@ namespace Mvc.Infrastructure.Mappers
             };
         }
 
+        public static LotEntity ToBllLot(this LotViewModel entity)
+        {
+            if (entity == null) return null;
+
+            return new LotEntity()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description,
+                Image = entity.Img,
+                Price = entity.Price,
+                CategoryId = int.Parse(entity.Category),
+                CreatorId = entity.CreatorId,
+                OwnerId = entity.OwnerId
+
+            };
+        }
+
         public static LotEntity ToBllLot(this NewLotViewModel entity)
         {
             if (entity == null) return null;
@@ -30,11 +48,9 @@ namespace Mvc.Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Img = entity.Img,
+                Image = entity.Img,
                 Price = entity.Price,
                 CategoryId = int.Parse(entity.Category),
-                CreationDate = entity.AddedDate,
-                PurchaseDate = entity.AddedDate,
                 CreatorId = entity.Creator
                 
             };
@@ -49,14 +65,13 @@ namespace Mvc.Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Img = entity.Img,
+                Img = entity.Image,
                 Price = entity.Price,
-                CreationDate = entity.CreationDate,
-                PurchaseDate = entity.PurchaseDate,
                 CreatorId = entity.CreatorId,
                 OwnerId = entity.OwnerId
             };
         }
+
 
 
 

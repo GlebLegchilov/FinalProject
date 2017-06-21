@@ -1,46 +1,44 @@
 ﻿
-        @model Mvc.Models.RegisterViewModel
 
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "reg" }))
-        {
-            @Html.AntiForgeryToken()
-            <h4>Register</h4>
-            <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.UserName, null, new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Captcha, new { @class = "col-md-2 control-label" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.Captcha, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
-                            <div class="img-responsive">
-                                <img src="@Url.Action("Captcha", "Account")" alt="captcha" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" class="btn btn-default" value="Register" />
-                        </div>
-                    </div>
-        }
+<form id="reg" action="/Account/Register" method="post" novalidate="novalidate">
+
+    <div class="form-horizontal" style="margin-left:30px">
+        <h4>Register</h4>
+        <hr>
+       
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="UserName">Enter your user name</label>
+            <div class="col-md-10">
+                <input name="UserName" class="form-control valid" id="UserName" type="text" value="" data-val-required="The field can not be empty!" data-val="true">
+              
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="Password">Enter your password</label>
+            <div class="col-md-10">
+                <input name="Password" class="form-control valid" id="Password" type="password" data-val-required="Enter your password" data-val="true" data-val-length-min="6" data-val-length-max="100" data-val-length="The password must contain at least 6 characters">
+               
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="ConfirmPassword">Confirm the password</label>
+            <div class="col-md-10">
+                <input name="ConfirmPassword" class="form-control valid" id="ConfirmPassword" type="password" data-val-required="Confirm the password" data-val="true" data-val-equalto-other="*.Password" data-val-equalto="Passwords must match">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="Captcha">Enter the code from the image</label>
+            <div class="col-md-10">
+                <input name="Captcha" class="form-control valid" id="Captcha" type="text" value="" data-val-required="Требуется поле Enter the code from the image." data-val="true">
+                <div class="img-responsive">
+                    <img alt="captcha" src="/Account/Captcha">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input class="btn btn-success" type="submit" value="Register">
+            </div>
+        </div>
+        </div>
+</form>

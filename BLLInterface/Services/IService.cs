@@ -9,5 +9,6 @@ namespace BLLInterface.Services
     {
         IEnumerable<TEntity> GetAll();
         TEntity GetById(int id);
+        bool Exist(TEntity entity);
     }
 }

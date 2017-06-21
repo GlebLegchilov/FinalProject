@@ -22,6 +22,8 @@ namespace DAL.Concrete
 
         public IEnumerable<DalUser> GetAll()
         {
+            
+            
             return context.Set<User>().AsEnumerable().Select(user => user.ToDalUser());
         }
 
@@ -32,14 +34,15 @@ namespace DAL.Concrete
         }
         public DalUser GetByName(string name)
         {
+            
             var ormuser = context.Set<User>().FirstOrDefault(user => user.Name == name);
             return ormuser.ToDalUser();
         }
 
-        public DalUser GetByPredicate(Expression<Func<DalUser, bool>> f)
+        public bool Exist(DalUser e)
         {
-            //Expression<Func<DalUser, bool>> -> Expression<Func<User, bool>> (!)
-            throw new NotImplementedException();
+            var entity = context.Set<User>().FirstOrDefault(g => g.Id == e.Id);
+            return entity.Name == e.Name;
         }
 
         public void Create(DalUser e)
@@ -55,9 +58,10 @@ namespace DAL.Concrete
             context.Set<User>().Remove(user);
         }
 
-        public void Update(DalUser e)
+        public void Update(DalUser entity)
         {
-            throw new NotImplementedException();
+            User ormEntity = context.Set<User>().FirstOrDefault(e => e.Id == entity.Id);
+            context.Entry(ormEntity).CurrentValues.SetValues((User)entity.ToOrmUser());
         }
     }
 }

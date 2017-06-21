@@ -1,0 +1,38 @@
+﻿
+
+<h3>Lots you purchase</h3>
+<hr />
+
+<table class="table">
+    <tr>
+        <th>
+            <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+        </th>
+        <th>
+            <label for="inputEmail3" class="col-sm-2 control-label">Price</label>
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in ViewBag.Purch as IEnumerable<Mvc.Models.LotViewModel>)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Name, "Details", "Lot", new { lotId = item.Id }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Price)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit Lot", "EditorLot", "Lot", new { lotId = @item.Id }, new { @class = "btn  btn-sm btn-warning" })
+                @using (Html.BeginForm("DeleteLot", "Lot", new { lotId = item.Id, type = "PurchList" }, FormMethod.Post, new { @class = "purchLotDel" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" class="btn btn-sm  btn-danger" value="Delete" style="margin:5px" />
+                }
+            </td>
+        </tr>
+    }
+</table>

@@ -39,10 +39,6 @@ namespace DependencyResolver
             kernel.Bind<ILotService>().To<LotServices>();
             kernel.Bind<ICategoryService>().To<CategoryService>();
 
-            kernel.Bind<IUserRepository>().To<UserRepository>();
-            kernel.Bind<IRoleRepository>().To<RoleRepository>();
-            kernel.Bind<ILotRepository>().To<LotRepository>();
-            kernel.Bind<ICategoryRepository>().To<CategoryRepository>();
         }
     }
 }

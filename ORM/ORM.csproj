@@ -69,6 +69,22 @@
     <Compile Include="Migrations\201706181624292_AddMigration.Designer.cs">
       <DependentUpon>201706181624292_AddMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706202309269_AddAnotheryMigration.cs" />
+    <Compile Include="Migrations\201706202309269_AddAnotheryMigration.Designer.cs">
+      <DependentUpon>201706202309269_AddAnotheryMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706210001205_AddAnotheryMigration1.cs" />
+    <Compile Include="Migrations\201706210001205_AddAnotheryMigration1.Designer.cs">
+      <DependentUpon>201706210001205_AddAnotheryMigration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706210007472_AddAnotheryMigration2.cs" />
+    <Compile Include="Migrations\201706210007472_AddAnotheryMigration2.Designer.cs">
+      <DependentUpon>201706210007472_AddAnotheryMigration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706210013585_AddAnotheryMigration3.cs" />
+    <Compile Include="Migrations\201706210013585_AddAnotheryMigration3.Designer.cs">
+      <DependentUpon>201706210013585_AddAnotheryMigration3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs" />
@@ -88,6 +104,22 @@
     <EmbeddedResource Include="Migrations\201706181624292_AddMigration.resx">
       <DependentUpon>201706181624292_AddMigration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706202309269_AddAnotheryMigration.resx">
+      <DependentUpon>201706202309269_AddAnotheryMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706210001205_AddAnotheryMigration1.resx">
+      <DependentUpon>201706210001205_AddAnotheryMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706210007472_AddAnotheryMigration2.resx">
+      <DependentUpon>201706210007472_AddAnotheryMigration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706210013585_AddAnotheryMigration3.resx">
+      <DependentUpon>201706210013585_AddAnotheryMigration3.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Images\default.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

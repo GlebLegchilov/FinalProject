@@ -51,6 +51,7 @@ namespace BLL.Mappers
             };
         }
 
+
         public static DalLot ToDalLot(this LotEntity entity)
         {
             if (entity == null) return null;
@@ -59,11 +60,9 @@ namespace BLL.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Img = entity.Img,
+                Image = entity.Image,
                 Price = entity.Price,
                 CategoryId = entity.CategoryId,
-                CreationDate = entity.CreationDate,
-                PurchaseDate = entity.PurchaseDate,
                 CreatorId = entity.CreatorId,
                 OwnerId = entity.OwnerId
             };
@@ -77,11 +76,9 @@ namespace BLL.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Img = entity.Img,
+                Image = entity.Image,
                 Price = entity.Price,
                 CategoryId = entity.CategoryId,
-                CreationDate = entity.CreationDate,
-                PurchaseDate = entity.PurchaseDate,
                 CreatorId = entity.CreatorId,
                 OwnerId = entity.OwnerId
             };
@@ -108,5 +105,7 @@ namespace BLL.Mappers
                 Description = entity.Description
             };
         }
+
+       
     }
 }

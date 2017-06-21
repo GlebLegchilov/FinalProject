@@ -5,29 +5,33 @@ using BLLInterface.Entities;
 using BLLInterface.Services;
 using BLL.Mappers;
 using DALInterface.Repository;
-using DALInterface.DTO;
 
 namespace BLL.Services
 {
     public class CategoryService: ICategoryService
     {
         private readonly IUnitOfWork uow;
-        private readonly ICategoryRepository repository;
 
-        public CategoryService(IUnitOfWork uow, ICategoryRepository repository)
+        public CategoryService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.repository = repository;
+        }
+
+        public bool Exist(CategoryEntity c)
+        {
+            return uow.Categorys.Exist(c.ToDalCategory());
         }
 
         public IEnumerable<CategoryEntity> GetAll()
         {
-            return repository.GetAll().Select(role => role.ToBllCategory());
+            return uow.Categorys.GetAll().Select(role => role.ToBllCategory());
         }
 
         public CategoryEntity GetById(int id)
         {
-            return repository.GetById(id).ToBllCategory();
+            return uow.Categorys.GetById(id).ToBllCategory();
         }
+
+      
     }
 }

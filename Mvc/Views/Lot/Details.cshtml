@@ -32,7 +32,13 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    @Html.ActionLink("Buy lot", "BuyLot", "Lot", new { lotId = Model.Id }, new {@class = "btn btn-lg btn-success" })
+                    @if (Model.OwnerId == 0){
+                    @Html.ActionLink("Buy lot", "BuyLot", "Lot", new { lotId = Model.Id }, new { @class = "btn btn-lg btn-success" })
+                    }
+                    @if ((Model.CreatorId == ViewBag.UserId)|| (Model.OwnerId == ViewBag.UserId))
+                    {
+                    @Html.ActionLink("Edit Lot", "EditorLot", "Lot", new { lotId = Model.Id }, new { @class = "btn btn-lg btn-info" })
+                    }
                 </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@ using ORM;
 
 namespace DAL.Concrete
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : IRepository<DalCategory>
     {
         private readonly DbContext context;
 
@@ -31,11 +31,18 @@ namespace DAL.Concrete
             return ormCategory.ToDalCategory();
         }
 
-        public DalCategory GetByPredicate(Expression<Func<DalCategory, bool>> f)
+        public DalCategory GetByName(string name)
         {
-            //Expression<Func<DalUser, bool>> -> Expression<Func<User, bool>> (!)
-            throw new NotImplementedException();
+            var ormCategory = context.Set<Category>().FirstOrDefault(category => category.Name == name);
+            return ormCategory.ToDalCategory();
         }
+
+        public bool Exist(DalCategory e)
+        {
+            var entity = context.Set<Category>().FirstOrDefault(g => g.Id == e.Id);
+            return entity.Name == e.Name;
+        }
+
 
         public void Create(DalCategory e)
         {
@@ -50,9 +57,10 @@ namespace DAL.Concrete
             context.Set<Category>().Remove(category);
         }
 
-        public void Update(DalCategory e)
+        public void Update(DalCategory entity)
         {
-            throw new NotImplementedException();
+            Category ormEntity = context.Set<Category>().FirstOrDefault(e => e.Id == entity.Id);
+            context.Entry(ormEntity).CurrentValues.SetValues((Category)entity.ToOrmCategory());
         }
     }
 }

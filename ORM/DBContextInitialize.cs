@@ -1,18 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Data.Entity;
-
-//namespace ORM
-//{
-//    class DBContextInitialize : CreateDatabaseIfNotExists<>
-//    {
-//    }
-//}
-
-
+﻿
 using System; 
 using System.Data.Entity;
 using System.Web.Security;
@@ -21,8 +7,8 @@ using System.IO;
 namespace ORM
 {
     public class DBContextInitialize : DropCreateDatabaseIfModelChanges<EntityModel>
-    //DropCreateDatabaseAlways<EntityModel> 
-    //CreateDatabaseIfNotExists<EntityModel> 
+                                       //DropCreateDatabaseAlways<EntityModel> 
+                                       //CreateDatabaseIfNotExists<EntityModel> 
     {
         protected override void Seed(EntityModel context)
         {

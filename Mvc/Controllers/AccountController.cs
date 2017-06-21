@@ -28,17 +28,15 @@ namespace Mvc.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
             var type = HttpContext.User.GetType();
             var iden = HttpContext.User.Identity.GetType();
-            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Login(LogOnViewModel viewModel, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -92,7 +90,6 @@ namespace Mvc.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel viewModel)
         {
             if (viewModel.Captcha != (string)Session[CaptchaImage.CaptchaValueKey])
@@ -107,7 +104,7 @@ namespace Mvc.Controllers
             if (anyUser)
             {
                 ModelState.AddModelError("", "User with this address already registered.");
-                return View(viewModel);
+                return View("Registr");
             }
 
             if (ModelState.IsValid)
@@ -166,17 +163,13 @@ namespace Mvc.Controllers
             return PartialView("_LoginPartial");
         }
 
-        public ActionResult GetAutPartial()
-        {        
-            return PartialView("_AuthFormPartial");
-        }
        
 
         [HttpGet]
         [Authorize]
         public ActionResult Cabinet()
         {
-            var user = userService.GetUserEntityByName(User.Identity.Name).ToVMUser(roleService);
+            var user = userService.GetByName(User.Identity.Name).ToVMUser(roleService);
             ViewBag.User = user;
             ViewBag.PurshaseList = lotService.GetAll().Where(l => user.Id == l.OwnerId);
             if (User.IsInRole("Admin"))
@@ -189,14 +182,14 @@ namespace Mvc.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteUser(int UserId)
         {
-            if (userService.GetUserEntityByName(User.Identity.Name).Id != UserId)
+            if (userService.GetByName(User.Identity.Name).Id != UserId)
             {
                 userService.DeleteUser(userService.GetById(UserId));
             }
             var userList = userService.GetAll().Select(u => u.ToVMUser(roleService));
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_UserList");
+                return PartialView("_UsersList", userService.GetAll().Select(u => u.ToVMUser(roleService)));
             }
             
             return RedirectToAction("Cabinet");

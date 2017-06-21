@@ -59,12 +59,10 @@ namespace DAL.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Img = entity.Img,
+                Image = entity.Img,
                 Price = entity.Price,
                 CategoryId = entity.CategoryId,
-                CreationDate = entity.CreationDate,
-                PurchaseDate = entity.PurchaseDate,
-                CreatorId = entity.CreatorId,
+                CreatorId = entity.UserId,
                 OwnerId = entity.OwnerId
             };
         }
@@ -77,12 +75,10 @@ namespace DAL.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Img = entity.Img,
+                Img = entity.Image,
                 Price = entity.Price,
                 CategoryId = entity.CategoryId,
-                CreationDate = entity.CreationDate,
-                PurchaseDate = entity.PurchaseDate,
-                CreatorId = entity.CreatorId,
+                UserId = entity.CreatorId,
                 OwnerId = entity.OwnerId
             };
         }
@@ -110,6 +106,8 @@ namespace DAL.Mappers
                 
             };
         }
+
+       
 
     }
 }

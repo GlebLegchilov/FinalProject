@@ -12,49 +12,68 @@ namespace BLL.Services
     public class LotServices: ILotService
     {
         private readonly IUnitOfWork uow;
-        private readonly ILotRepository repository;
 
-        public LotServices(IUnitOfWork uow, ILotRepository repository)
+        public LotServices(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.repository = repository;
+        }
+
+        public bool Exist(LotEntity lot)
+        {
+            return uow.Lots.Exist(lot.ToDalLot());
         }
 
         public LotEntity GetById(int id)
         {
-            return repository.GetById(id).ToBllLot();
+            return uow.Lots.GetById(id).ToBllLot();
         }
 
 
         public IEnumerable<LotEntity> GetAll()
         {
-            return repository.GetAll().Select(lot => lot.ToBllLot());
+            return uow.Lots.GetAll().Select(lot => lot.ToBllLot());
         }
 
         public void CreateLot(LotEntity lot)
         {
-            repository.Create(lot.ToDalLot());
+           
+
+            
+            uow.Lots.Create(lot.ToDalLot());
             uow.Commit();
         }
 
-        public void DeleteLot(LotEntity lot)
+        public void DeleteLot(int id)
         {
-            repository.Delete(lot.ToDalLot());
+            uow.Lots.Delete(uow.Lots.GetById(id));
             uow.Commit();
         }
 
         public void UdateLot(LotEntity lot)
         {
-            repository.Update(lot.ToDalLot());
+            uow.Lots.Update(lot.ToDalLot());
             uow.Commit();
         }
 
         public void BuyLot(int id,int owner)
         {
-            var entity = repository.GetById(id);
+            var entity = uow.Lots.GetById(id);
             entity.OwnerId = owner;
-            repository.Update(entity);
+            uow.Lots.Update(entity);
             uow.Commit();
         }
+
+        public IEnumerable<LotEntity> GetPurchaseLot(string name)
+        {
+            var userId = uow.Users.GetByName(name).Id;
+            return uow.Lots.GetAll().Where(l => l.OwnerId == userId).Select(l=>l.ToBllLot()); 
+        }
+        
+        public IEnumerable<LotEntity> GetMyLots(string name)
+        {
+            var userId = uow.Users.GetByName(name).Id;
+            return uow.Lots.GetAll().Where(l => l.CreatorId == userId).Select(l => l.ToBllLot());
+        }
+
     }
 }

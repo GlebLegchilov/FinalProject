@@ -10,6 +10,7 @@ namespace Mvc.Infrastructure.Providers
 {
     public class CustomRoleProvider : RoleProvider
     {
+        public override string ApplicationName { get; set; }
 
         private IUserService userService => (IUserService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserService));
         private IRoleService roleService => (IRoleService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IRoleService));
@@ -35,7 +36,7 @@ namespace Mvc.Infrastructure.Providers
         public override string[] GetRolesForUser(string name)
         {
             var roles = new string[] { };
-            var user = userService.GetUserEntityByName(name);
+            var user = userService.GetByName(name);
 
             if (user == null) return roles;
 
@@ -48,6 +49,7 @@ namespace Mvc.Infrastructure.Providers
             return roles;
         }
 
+        #region Stubs
         public override void CreateRole(string roleName)
         {
             throw new NotImplementedException();
@@ -87,7 +89,7 @@ namespace Mvc.Infrastructure.Providers
         {
             throw new NotImplementedException();
         }
-
-        public override string ApplicationName { get; set; }
+        #endregion
+        
     }
 }

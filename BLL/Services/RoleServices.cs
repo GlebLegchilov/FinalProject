@@ -12,22 +12,24 @@ namespace BLL.Services
     public class RoleServices : IRoleService
     {
         private readonly IUnitOfWork uow;
-        private readonly IRoleRepository repository;
 
-        public RoleServices(IUnitOfWork uow, IRoleRepository repository)
+        public RoleServices(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.repository = repository;
+        }
+        public bool Exist(RoleEntity c)
+        {
+            return uow.Roles.Exist(c.ToDalRole());
         }
 
         public IEnumerable<RoleEntity> GetAll()
         {
-            return repository.GetAll().Select(role=>role.ToBllRole());
+            return uow.Roles.GetAll().Select(role=>role.ToBllRole());
         }
 
         public RoleEntity GetById(int roleId)
         {
-            return repository.GetById(roleId).ToBllRole();
+            return uow.Roles.GetById(roleId).ToBllRole();
         }
     }
 }

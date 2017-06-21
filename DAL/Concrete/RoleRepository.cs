@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using DAL.Mappers;
@@ -11,7 +10,7 @@ using ORM;
 
 namespace DAL.Concrete
 {
-    public class RoleRepository : IRoleRepository
+    public class RoleRepository : IRepository<DalRole>
     {
         private readonly DbContext context;
 
@@ -31,10 +30,16 @@ namespace DAL.Concrete
             return ormRole.ToDalRole();
         }
 
-        public DalRole GetByPredicate(Expression<Func<DalRole, bool>> f)
+        public DalRole GetByName(string name)
         {
-            //Expression<Func<DalUser, bool>> -> Expression<Func<User, bool>> (!)
-            throw new NotImplementedException();
+            var ormRole = context.Set<Role>().FirstOrDefault(role => role.Name == name);
+            return ormRole.ToDalRole();
+        }
+
+        public bool Exist(DalRole e)
+        {
+            var entity = context.Set<Role>().FirstOrDefault(g => g.Id == e.Id);
+            return entity.Name == e.Name;
         }
 
         public void Create(DalRole e)
@@ -50,9 +55,10 @@ namespace DAL.Concrete
             context.Set<Role>().Remove(role);
         }
 
-        public void Update(DalRole e)
+        public void Update(DalRole entity)
         {
-            throw new NotImplementedException();
+            Role ormEntity = context.Set<Role>().FirstOrDefault(e => e.Id == entity.Id);
+            context.Entry(ormEntity).CurrentValues.SetValues((Role)entity.ToOrmRole());
         }
     }
 }

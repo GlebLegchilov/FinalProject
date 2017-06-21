@@ -47,7 +47,7 @@ namespace Mvc.Infrastructure.Providers
 
         public override bool ValidateUser(string name, string password)
         {
-            var user = userService.GetUserEntityByName(name);
+            var user = userService.GetByName(name);
 
             if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
             {
@@ -58,7 +58,7 @@ namespace Mvc.Infrastructure.Providers
 
         public override MembershipUser GetUser(string name, bool userIsOnline)
         {
-            var user = userService.GetUserEntityByName(name);
+            var user = userService.GetByName(name);
 
             if (user == null) return null;
 

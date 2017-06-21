@@ -11,7 +11,7 @@ using ORM;
 
 namespace DAL.Concrete
 {
-    public class LotRepository : ILotRepository
+    public class LotRepository : IRepository<DalLot>
     {
         private readonly DbContext context;
 
@@ -31,6 +31,12 @@ namespace DAL.Concrete
             return ormLot.ToDalLot();
         }
 
+        public DalLot GetByName(string name)
+        {
+            var ormLot = context.Set<Lot>().FirstOrDefault(lot => lot.Name == name);
+            return ormLot.ToDalLot();
+        }
+
         public DalLot GetByPredicate(Expression<Func<DalLot, bool>> f)
         {
             //Expression<Func<DalUser, bool>> -> Expression<Func<User, bool>> (!)
@@ -39,8 +45,17 @@ namespace DAL.Concrete
 
         public void Create(DalLot e)
         {
+
             var user = e.ToOrmLot();
+
             context.Set<Lot>().Add(user);
+        }
+
+        public bool Exist(DalLot e)
+        {
+            var entity = context.Set<Lot>().FirstOrDefault(lot => lot.Id == e.Id);
+            if (entity == null) return false;
+            return entity.Name == e.Name;
         }
 
         public void Delete(DalLot e)

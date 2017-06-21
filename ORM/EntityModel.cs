@@ -23,6 +23,11 @@
                 .HasMany(e => e.Users)
                 .WithRequired(e => e.Role)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Lots)
+                .WithRequired(p => p.User)
+                .WillCascadeOnDelete(true);
         }
 
 

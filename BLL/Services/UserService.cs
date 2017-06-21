@@ -11,39 +11,49 @@ namespace BLL.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork uow;
-        private readonly IUserRepository userRepository;
 
-        public UserService(IUnitOfWork uow, IUserRepository repository)
+        public UserService(IUnitOfWork uow)
         {
             this.uow = uow;
-            this.userRepository = repository;
         }
 
         public UserEntity GetById(int id)
         {
-            return userRepository.GetById(id).ToBllUser();
+            return uow.Users.GetById(id).ToBllUser();
+        }
+        public bool Exist(string name)
+        {
+            return uow.Users.Exist(uow.Users.GetByName(name));
+        }
+        public bool Exist(UserEntity c)
+        {
+            return uow.Users.Exist(c.ToDalUser());
         }
 
-        public UserEntity GetUserEntityByName(string name)
+        public UserEntity GetByName(string name)
         {
 
-            return userRepository.GetByName(name).ToBllUser();
+            return uow.Users.GetByName(name).ToBllUser();
+        }
+        public int GetUserId(string name)
+        {
+            return uow.Users.GetByName(name).ToBllUser().Id;
         }
 
         public IEnumerable<UserEntity> GetAll()
         {
-            return userRepository.GetAll().Select(user => user.ToBllUser());
+            return uow.Users.GetAll().Select(user => user.ToBllUser());
         }
 
         public void CreateUser(UserEntity user)
         {
-            userRepository.Create(user.ToDalUser());
+            uow.Users.Create(user.ToDalUser());
             uow.Commit();
         }
 
         public void DeleteUser(UserEntity user)
         {
-            userRepository.Delete(user.ToDalUser());
+            uow.Users.Delete(user.ToDalUser());
             uow.Commit();
         }
     }

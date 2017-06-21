@@ -247,8 +247,12 @@
     <Content Include="Views\Shared\_RegFormPartial.cshtml" />
     <Content Include="Views\Account\Cabinet.cshtml" />
     <Content Include="Views\Lot\Details.cshtml" />
-    <Content Include="Views\Lot\LotEditor.cshtml" />
+    <Content Include="Views\Lot\EditorLot.cshtml" />
     <Content Include="Views\Shared\_UsersList.cshtml" />
+    <Content Include="Views\Lot\MyLots.cshtml" />
+    <Content Include="Views\Shared\_LotsListMy.cshtml" />
+    <Content Include="Views\Shared\_LotsListPurch.cshtml" />
+    <Content Include="Views\Lot\CreateLot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

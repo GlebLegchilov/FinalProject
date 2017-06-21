@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLLInterface", "BLLInterfac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc", "Mvc\Mvc.csproj", "{4D579D75-58E4-4990-B16C-42AAEE632CE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAplicationUI", "ConsoleAplicationUI\ConsoleAplicationUI.csproj", "{02C2EC3A-0783-45BE-A59C-E1E800BDD5FB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,10 +51,6 @@ Global
 		{4D579D75-58E4-4990-B16C-42AAEE632CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D579D75-58E4-4990-B16C-42AAEE632CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D579D75-58E4-4990-B16C-42AAEE632CE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02C2EC3A-0783-45BE-A59C-E1E800BDD5FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02C2EC3A-0783-45BE-A59C-E1E800BDD5FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02C2EC3A-0783-45BE-A59C-E1E800BDD5FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02C2EC3A-0783-45BE-A59C-E1E800BDD5FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
