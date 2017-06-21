@@ -171,9 +171,9 @@ namespace Mvc.Controllers
         {
             var user = userService.GetByName(User.Identity.Name).ToVMUser(roleService);
             ViewBag.User = user;
-            ViewBag.PurshaseList = lotService.GetAll().Where(l => user.Id == l.OwnerId);
+            ViewBag.PurshaseList = lotService.GetAll().Where(l => (user.Id == l.OwnerId));
             if (User.IsInRole("Admin"))
-                return View(userService.GetAll().Select(u => u.ToVMUser(roleService)));
+                return View(userService.GetAll().Where(l=>l.UserName != user.UserName).Select(u => u.ToVMUser(roleService)));
             return View();
         }
 

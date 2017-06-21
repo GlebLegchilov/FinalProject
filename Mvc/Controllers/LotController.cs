@@ -23,7 +23,6 @@ namespace Mvc.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public ActionResult Index()
         {
             var lots = lotService.GetAll().Select(l => l.ToLotViewModel());
@@ -133,6 +132,11 @@ namespace Mvc.Controllers
                 {
                     ViewBag.Purch = lotService.GetPurchaseLot(User.Identity.Name).Select(l => l.ToLotViewModel());
                     return PartialView("_LotsListPurch");
+                }
+                else
+                {
+                    ViewBag.myLots = lotService.GetMyLots(User.Identity.Name).Select(l => l.ToLotViewModel());
+                    return PartialView("_LotsListMy");
                 }
 
             }

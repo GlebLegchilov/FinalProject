@@ -8,13 +8,6 @@
         return false;
     });
 
-    //$("#regButton").click(function (event) {
-    //    event.preventDefault();
-
-    //    $('#myRegModal').modal('show');
-    //    return false;
-    //});
-
 
     $('#auth').submit(function (event) {
         
@@ -39,30 +32,38 @@
         return false;
     });
 
-    $('#reg').submit(function (event) {
 
-        event.preventDefault();
+    //$("#regButton").click(function (event) {
+    //    event.preventDefault();
 
-        var $btn = $('#loginButton').button('loading')
+    //    $('#myRegModal').modal('show');
+    //    return false;
+    //});
 
-        var data = $(this).serialize();
-        var url = $(this).attr('action');
-        alert("zc");
-        $.post(url, data, function (response) {
-            if (response != "") {
+    //$('#reg').submit(function (event) {
+
+    //    event.preventDefault();
+
+    //    var $btn = $('#loginButton').button('loading')
+
+    //    var data = $(this).serialize();
+    //    var url = $(this).attr('action');
+    //    alert("zc");
+    //    $.post(url, data, function (response) {
+    //        if (response != "") {
 
                
-                $("#myRegModal").modal('hide');
-                $('#regPart').empty();
-                $('#authReg').empty().prepend(response);
-            }
-            else {
-                alert("Incorrect login or password.");
-            }
-        });
-        $btn.button('reset')
-        return false;
-    });
+    //            $("#myRegModal").modal('hide');
+    //            $('#regPart').empty();
+    //            $('#authReg').empty().prepend(response);
+    //        }
+    //        else {
+    //            alert("Incorrect login or password.");
+    //        }
+    //    });
+    //    $btn.button('reset')
+    //    return false;
+    //});
 
     $('.userDel').submit(function (event) {
 
@@ -130,20 +131,5 @@
         }
     });
 
-
-    $('#logoutForm').submit(function (event) {
-        alert("adsa");
-        event.preventDefault();
-        var data = $(this).serialize();
-        var url = $(this).attr('action');
-
-
-        $.post(url, data, function (response) {
-            
-            $('#authReg').empty().prepend(response);
-        });
-
-        return false;
-    });
 
 });
