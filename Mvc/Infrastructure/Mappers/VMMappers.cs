@@ -1,6 +1,8 @@
 ﻿using BLLInterface.Entities;
 using BLLInterface.Services;
 using Mvc.Models;
+using System.Web;
+using System.IO;
 
 
 namespace Mvc.Infrastructure.Mappers
@@ -16,7 +18,7 @@ namespace Mvc.Infrastructure.Mappers
                 Id = userEntity.Id,
                 UserName = userEntity.UserName,
                 Password = userEntity.Password,
-                Role = s.GetById(userEntity.RoleId).Name,
+                Role = s.GetRole(userEntity.RoleId).Name,
                 CreationDate = userEntity.CreationDate
             };
         }
@@ -30,10 +32,8 @@ namespace Mvc.Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Image = entity.Img,
-                Price = entity.Price,
-                CategoryId = int.Parse(entity.Category),
-                CreatorId = entity.CreatorId,
+                //CategoryId = int.Parse(entity.CategoryId),
+                AuctionId = entity.AuctionId,
                 OwnerId = entity.OwnerId
 
             };
@@ -48,11 +48,10 @@ namespace Mvc.Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Image = entity.Img,
-                Price = entity.Price,
-                CategoryId = int.Parse(entity.Category),
-                CreatorId = entity.Creator
-                
+                OwnerId = entity.OwnerId,
+                //CategoryId = int.Parse(entity.Category),
+               
+
             };
         }
 
@@ -65,14 +64,63 @@ namespace Mvc.Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Img = entity.Image,
-                Price = entity.Price,
-                CreatorId = entity.CreatorId,
-                OwnerId = entity.OwnerId
+               Image = entity.Image,
+                OwnerId = entity.OwnerId,
+
             };
         }
 
+        public static byte[] ToImage(this HttpPostedFileBase image)
+        {
+            var content = new byte[image.ContentLength];
+            image.InputStream.Seek(0, SeekOrigin.Begin);
+            image.InputStream.Read(content, 0, image.ContentLength);
+            return content;
+        }
 
+        public static AuctionEntity ToBllAuction(this AuctionViewModel entity)
+        {
+            if (entity == null) return null;
+            bool type = true;
+            if (entity.Type == "Simple")
+            {
+                type = false;
+            }
+            return new AuctionEntity()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                AvailabilityStatus = entity.AvailabilityStatus,
+                CreatorId =entity.CreatorId,
+                EndingDate = entity.EndingDate,
+                Price = entity.Price,
+                //LotId = entity.LotId,
+                Type = type
+
+            };
+        }
+
+        public static AuctionViewModel ToViewModelAuction(this AuctionEntity entity)
+        {
+            if (entity == null) return null;
+            string type = "Standart";
+            if (!entity.Type)
+            {
+                type = "Simple";
+            }
+            return new AuctionViewModel()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                AvailabilityStatus = entity.AvailabilityStatus,
+                CreatorId = entity.CreatorId,
+                EndingDate = entity.EndingDate,
+                Price = entity.Price,
+                LotId = entity.LotId.ToString(),
+                Type = type
+
+            };
+        }
 
 
 

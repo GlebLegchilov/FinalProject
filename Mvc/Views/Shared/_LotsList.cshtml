@@ -1,0 +1,32 @@
+﻿
+<table class="table">
+    <tr>
+        <th>
+           <label>Name</label>
+        </th>
+      
+        <th></th>
+    </tr>
+    @if (ViewBag.Lots != null)
+    {
+        foreach (var item in ViewBag.Lots as IEnumerable<Mvc.Models.LotViewModel>)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Name)
+                </td>
+                <td>
+                    @using (Html.BeginForm("AddLot", "Auction", new { LotId = @item.Id }, FormMethod.Get, new { @class = "addLot" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @*@Html.ActionLink("Delete", "DeleteUser", new { @class = "btn btn-danger", @id = item.Id })*@
+                        <input type="submit" class="btn btn-info " value="Add" />
+                    }
+                </td>
+            </tr>
+
+        }
+    }
+</table>
+

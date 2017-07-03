@@ -14,18 +14,16 @@ namespace Mvc.Controllers
     {
         private readonly IUserService userService;
         private readonly ILotService lotService;
-        private readonly ICategoryService categoryService;
 
-        public LotController(IUserService userService,  ILotService lotService, ICategoryService categoryService) { 
+        public LotController(IUserService userService,  ILotService lotService) { 
             this.userService = userService;
             this.lotService = lotService;
-            this.categoryService = categoryService;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
-            var lots = lotService.GetAll().Select(l => l.ToLotViewModel());
+            var lots = lotService.GetAllLots().Select(l => l.ToLotViewModel());
             return View(lots);
         }
 
@@ -34,7 +32,8 @@ namespace Mvc.Controllers
         public ActionResult Details(int lotId)
         {
             ViewBag.UserId = userService.GetUserId(User.Identity.Name);
-            var lot = lotService.GetById(lotId).ToLotViewModel();
+            var lot = lotService.GetLot(lotId).ToLotViewModel();
+            //lot.Image = imageService.GetImageByLoId(lotId);
             return View(lot);
         }
 
@@ -43,17 +42,18 @@ namespace Mvc.Controllers
         public ActionResult CreateLot()
         {
 
-            ViewBag.Category = GetCategoryList();
+           
             return View("");
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult CreateLot(NewLotViewModel newLot, HttpPostedFileBase uploadImage)
         {
-            ViewBag.Category = GetCategoryList();
+           
             ViewBag.UserId = userService.GetUserId(User.Identity.Name);
-            if (lotService.Exist(newLot.ToBllLot()))
+            if (lotService.IsExist(newLot.Id))
             {
                 ModelState.AddModelError("", "Lot with this name already added");
                 return View(newLot);
@@ -61,18 +61,13 @@ namespace Mvc.Controllers
 
             if (ModelState.IsValid)
             {
+                newLot.OwnerId = userService.GetUserId(User.Identity.Name);
+                var lot = newLot.ToBllLot();
                 if (uploadImage != null)
-                {
-                    byte[] imageData = null;
-                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                    {
-                        imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
-                    }
-                    newLot.Img = imageData;
-                }
-                newLot.Creator = userService.GetUserId(User.Identity.Name);
-                lotService.CreateLot(newLot.ToBllLot());
-                
+                    lot.Image = uploadImage.ToImage();
+
+
+                lotService.CreateLot(lot);
 
                 return RedirectToAction("Index");
 
@@ -85,32 +80,27 @@ namespace Mvc.Controllers
         public ActionResult EditorLot(int lotId)
         {
 
-            ViewBag.Category = GetCategoryList();
+          
             ViewBag.UserId = userService.GetUserId(User.Identity.Name);
-            var lot = lotService.GetById(lotId).ToLotViewModel();
+            var lot = lotService.GetLot(lotId).ToLotViewModel();
             return View( lot);
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult EditorLot(LotViewModel editLot, HttpPostedFileBase uploadImage)
         {
-            ViewBag.Category = GetCategoryList();
+          
             ViewBag.UserId = userService.GetUserId(User.Identity.Name);
-
+            var lot = editLot.ToBllLot();
             if (ModelState.IsValid)
             {
                 if (uploadImage != null)
-                {
-                    byte[] imageData = null;
-                    using (var binaryReader = new BinaryReader(uploadImage.InputStream))
-                    {
-                        imageData = binaryReader.ReadBytes(uploadImage.ContentLength);
-                    }
-                    editLot.Img = imageData;
-                }
+                    lot.Image = uploadImage.ToImage();
+                
 
-                lotService.UdateLot(editLot.ToBllLot());
+                lotService.UdateLot(lot);
 
                 return RedirectToAction("Index");
 
@@ -128,16 +118,16 @@ namespace Mvc.Controllers
             lotService.DeleteLot(lotId);
             if (Request.IsAjaxRequest())
             {
-                if (type == "PurchList")
-                {
-                    ViewBag.Purch = lotService.GetPurchaseLot(User.Identity.Name).Select(l => l.ToLotViewModel());
-                    return PartialView("_LotsListPurch");
-                }
-                else
-                {
-                    ViewBag.myLots = lotService.GetMyLots(User.Identity.Name).Select(l => l.ToLotViewModel());
-                    return PartialView("_LotsListMy");
-                }
+                //if (type == "PurchList")
+                //{
+                //    ViewBag.Purch = lotService.GetPurchaseLot(User.Identity.Name).Select(l => l.ToLotViewModel());
+                //    return PartialView("_LotsListPurch");
+                //}
+                //else
+                //{
+                //    ViewBag.myLots = lotService.GetMyLots(User.Identity.Name).Select(l => l.ToLotViewModel());
+                //    return PartialView("_LotsListMy");
+                //}
 
             }
 
@@ -150,31 +140,22 @@ namespace Mvc.Controllers
         [Authorize]
         public ActionResult MyLots()
         {
-            ViewBag.Purch = lotService.GetPurchaseLot(User.Identity.Name).Select(l => l.ToLotViewModel());
-            ViewBag.myLots = lotService.GetMyLots(User.Identity.Name).Select(l => l.ToLotViewModel());
+            //ViewBag.Purch = lotService.GetOwnerLots(User.Identity.Name).Select(l => l.ToLotViewModel());
+            ViewBag.myLots = lotService.GetOwnerLots(User.Identity.Name).Select(l => l.ToLotViewModel());
             return View();
         }
 
         [Authorize]
         public ActionResult BuyLot(int lotId)
         {
-            lotService.BuyLot(lotId, userService.GetByName(User.Identity.Name).Id);
+            //lotService.BuyLot(lotId, userService.GetByName(User.Identity.Name).Id);
             return RedirectToAction("Index");
         }
 
-        private List<SelectListItem> GetCategoryList()
-        {
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            var listCategory = categoryService.GetAll();
-            foreach (var item in listCategory)
-            {
-                listItems.Add(new SelectListItem
-                {
-                    Text = item.Name,
-                    Value = item.Id.ToString()
-                });
-            }
-            return listItems;
-        }
+       
+
+
+      
+
     }
 }

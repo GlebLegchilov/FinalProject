@@ -174,6 +174,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuctionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LotController.cs" />
     <Compile Include="Global.asax.cs">
@@ -184,9 +185,13 @@
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\Providers\CustomMembershipProvider.cs" />
     <Compile Include="Infrastructure\Providers\CustomRoleProvider.cs" />
+    <Compile Include="Models\AuctionViewModel.cs" />
+    <Compile Include="Models\FeedbackViewModel.cs" />
     <Compile Include="Models\LogOnViewModel.cs" />
     <Compile Include="Models\LotViewModel.cs" />
+    <Compile Include="Models\NewAuctionViewModel.cs" />
     <Compile Include="Models\NewLotViewModel.cs" />
+    <Compile Include="Models\RatesViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -253,6 +258,10 @@
     <Content Include="Views\Shared\_LotsListMy.cshtml" />
     <Content Include="Views\Shared\_LotsListPurch.cshtml" />
     <Content Include="Views\Lot\CreateLot.cshtml" />
+    <Content Include="Views\Auction\CreateAuction.cshtml" />
+    <Content Include="Views\Auction\Index.cshtml" />
+    <Content Include="Views\Shared\_LotsList.cshtml" />
+    <Content Include="Views\Auction\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

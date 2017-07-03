@@ -5,6 +5,7 @@ namespace BLL.Mappers
 {
     public static class BllEntityMappers
     {
+        #region User
         public static DalUser ToDalUser(this UserEntity userEntity)
         {
             if (userEntity == null) return null;
@@ -30,7 +31,9 @@ namespace BLL.Mappers
                 CreationDate = dalUser.CreationDate
             };
         }
+        #endregion
 
+        #region Role
         public static DalRole ToDalRole(this RoleEntity roleEntity)
         {
             if (roleEntity == null) return null;
@@ -50,8 +53,9 @@ namespace BLL.Mappers
                 Name = dalRole.Name
             };
         }
+        #endregion
 
-
+        #region Lot
         public static DalLot ToDalLot(this LotEntity entity)
         {
             if (entity == null) return null;
@@ -61,10 +65,8 @@ namespace BLL.Mappers
                 Name = entity.Name,
                 Description = entity.Description,
                 Image = entity.Image,
-                Price = entity.Price,
-                CategoryId = entity.CategoryId,
-                CreatorId = entity.CreatorId,
-                OwnerId = entity.OwnerId
+                OwnerId = entity.OwnerId,
+                AuctionId = entity.AuctionId
             };
         }
 
@@ -77,35 +79,101 @@ namespace BLL.Mappers
                 Name = entity.Name,
                 Description = entity.Description,
                 Image = entity.Image,
-                Price = entity.Price,
-                CategoryId = entity.CategoryId,
+                OwnerId = entity.OwnerId,
+                AuctionId = entity.AuctionId
+            };
+        }
+        #endregion
+
+     
+        #region Auction
+        public static DalAuction ToDalAuction(this AuctionEntity entity)
+        {
+            if (entity == null) return null;
+            return new DalAuction()
+            {
+                Id = entity.Id,
+                Name = entity.Name,
                 CreatorId = entity.CreatorId,
-                OwnerId = entity.OwnerId
+                MinPrice = entity.Price,
+                EndingDate = entity.EndingDate,
+                Type = entity.Type,
+                LotId = entity.LotId,
+                AvailabilityStatus = entity.AvailabilityStatus
             };
         }
 
-        public static DalCategory ToDalCategory(this CategoryEntity entity)
+        public static AuctionEntity ToBllAuction(this DalAuction entity)
         {
             if (entity == null) return null;
-            return new DalCategory()
+            return new AuctionEntity()
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Description = entity.Description
+                CreatorId = entity.CreatorId,
+                Price = entity.MinPrice,
+                EndingDate = entity.EndingDate,
+                Type = entity.Type,
+                LotId = entity.LotId,
+                AvailabilityStatus = entity.AvailabilityStatus
             };
         }
+        #endregion
 
-        public static CategoryEntity ToBllCategory(this DalCategory entity)
+      
+
+        #region Feedback
+        public static DalFeedback ToDalFeedback(this FeedbackEntity entity)
         {
             if (entity == null) return null;
-            return new CategoryEntity()
+            return new DalFeedback()
             {
                 Id = entity.Id,
-                Name = entity.Name,
-                Description = entity.Description
+                CreationDate = entity.CreationDate,
+                CreatorId = entity.CreatorId,
+                TargetId = entity.TargetId,
+                Text = entity.Text
             };
         }
 
-       
+        public static FeedbackEntity ToBllFeedback(this DalFeedback entity)
+        {
+            if (entity == null) return null;
+            return new FeedbackEntity()
+            {
+                Id = entity.Id,
+                CreationDate = entity.CreationDate,
+                CreatorId = entity.CreatorId,
+                TargetId = entity.TargetId,
+                Text = entity.Text
+            };
+        }
+        #endregion
+
+        #region Rate
+        public static DalRate ToDalRate(this RateEntity entity)
+        {
+            if (entity == null) return null;
+            return new DalRate()
+            {
+                Id = entity.Id,
+                AuctionId = entity.AuctionId,
+                UserId = entity.UserId,
+                Value = entity.Value
+            };
+        }
+
+        public static RateEntity ToBllRate(this DalRate entity)
+        {
+            if (entity == null) return null;
+            return new RateEntity()
+            {
+                Id = entity.Id,
+                AuctionId = entity.AuctionId,
+                UserId = entity.UserId,
+                Value = entity.Value
+            };
+        }
+        #endregion
     }
 }

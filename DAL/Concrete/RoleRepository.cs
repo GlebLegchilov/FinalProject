@@ -6,59 +6,45 @@ using System.Linq.Expressions;
 using DAL.Mappers;
 using DALInterface.DTO;
 using DALInterface.Repository;
-using ORM;
+using ORM.Models;
 
 namespace DAL.Concrete
 {
-    public class RoleRepository : IRepository<DalRole>
+    public class RoleRepository : Repository<DalRole, Role>
     {
-        private readonly DbContext context;
 
         public RoleRepository(DbContext uow)
         {
             this.context = uow;
         }
 
-        public IEnumerable<DalRole> GetAll()
-        {
-            return context.Set<Role>().AsEnumerable().Select(role => role.ToDalRole());
-        }
-
-        public DalRole GetById(int key)
+        public override DalRole GetById(int key)
         {
             var ormRole = context.Set<Role>().FirstOrDefault(role => role.Id == key);
             return ormRole.ToDalRole();
         }
 
-        public DalRole GetByName(string name)
-        {
-            var ormRole = context.Set<Role>().FirstOrDefault(role => role.Name == name);
-            return ormRole.ToDalRole();
-        }
-
-        public bool Exist(DalRole e)
-        {
-            var entity = context.Set<Role>().FirstOrDefault(g => g.Id == e.Id);
-            return entity.Name == e.Name;
-        }
-
-        public void Create(DalRole e)
+        public override void Create(DalRole e)
         {
             var user = e.ToOrmRole();
             context.Set<Role>().Add(user);
         }
 
-        public void Delete(DalRole e)
+        public override void Delete(int id)
         {
-            var role = e.ToOrmRole();
-            role = context.Set<Role>().Single(r => r.Id == role.Id);
+            var role = context.Set<Role>().Single(r => r.Id == id);
             context.Set<Role>().Remove(role);
         }
 
-        public void Update(DalRole entity)
+        public override void Update(DalRole entity)
         {
             Role ormEntity = context.Set<Role>().FirstOrDefault(e => e.Id == entity.Id);
             context.Entry(ormEntity).CurrentValues.SetValues((Role)entity.ToOrmRole());
+        }
+
+        public override IEnumerable<DalRole> GetByPredicate(Expression<Func<DalRole, bool>> predicate)
+        {
+            return GetOrmByPredicate(predicate).Select(e => e.ToDalRole());
         }
     }
 }

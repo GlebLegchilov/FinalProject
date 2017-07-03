@@ -4,17 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 
-namespace ORM
+namespace ORM.Models
 {
-    public partial class Category
+    public partial class Role : IOrmEntity
     {
+        public Role()
+        {
+            Users = new HashSet<User>();
+        }
 
         public int Id { get; set; }
-
-        [Required]
+        
         public string Name { get; set; }
 
         public string Description { get; set; }
-        
+
+        public virtual ICollection<User> Users { get; set; }
     }
 }

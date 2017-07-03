@@ -6,15 +6,14 @@ namespace Mvc.Models
     public class LotViewModel
     {
         public int Id { get; set; }
+        public int OwnerId { get; set; }
         [Display(Name = "Lot name")]
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Price { get; set; }
-        public byte[] Img { get; set; }
-        [Display(Name = "Lot's category")]
-        public string Category { get; set; }
-        public int CreatorId { get; set; }
-        public int OwnerId { get; set; }
+        public byte[] Image { get; set; }
+        public int AuctionId { get; set; }
+
+
 
     }
 }

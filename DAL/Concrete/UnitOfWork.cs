@@ -10,10 +10,12 @@ namespace DAL.Concrete
     {
         #region private repository fields
 
-        private IUserRepository userRepository;
+        private IRepository<DalUser> userRepository;
         private IRepository<DalRole> roleRepository;
         private IRepository<DalLot> lotRepository;
-        private IRepository<DalCategory> categoryRepository;
+        private IRepository<DalAuction> auctionRepository;
+        private IRepository<DalFeedback> feedbackRepository;
+        private IRepository<DalRate> rateRepository;
         #endregion
 
         public UnitOfWork(DbContext context)
@@ -25,7 +27,7 @@ namespace DAL.Concrete
 
         #region Repository Properties
 
-        public IUserRepository Users
+        public IRepository<DalUser> Users
         {
             get
             {
@@ -52,16 +54,38 @@ namespace DAL.Concrete
                 return lotRepository;
             }
         }
-        public IRepository<DalCategory> Categorys
+        
+
+        public IRepository<DalAuction> Auctions
         {
             get
             {
-                if (categoryRepository == null)
-                    categoryRepository = new CategoryRepository(Context);
-                return categoryRepository;
+                if (auctionRepository == null)
+                    auctionRepository = new AuctionRepository(Context);
+                return auctionRepository;
             }
         }
-      
+        
+        public IRepository<DalFeedback> Feedbacks
+        {
+            get
+            {
+                if (feedbackRepository == null)
+                    feedbackRepository = new FeedbackRepository(Context);
+                return feedbackRepository;
+            }
+        }
+
+        public IRepository<DalRate> Rates
+        {
+            get
+            {
+                if (rateRepository == null)
+                    rateRepository = new RateRepositiry(Context);
+                return rateRepository;
+            }
+        }
+
         #endregion
 
         public void Commit()

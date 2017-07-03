@@ -1,0 +1,88 @@
+﻿@model Mvc.Models.AuctionViewModel
+@{
+    ViewBag.Title = "Details";
+}
+<h2>@Model.Name</h2>
+<hr />
+ @using (Html.BeginForm("AddRate", "Auction", null, FormMethod.Post, null))
+ {
+<div class="container">
+
+            <div class="row">
+                    <div class="col-md-6">
+
+                        <h4 class="control-label">Auction's name</h4>
+                        <div >
+                            <h4 class="control-label">@Model.Name</h4>
+                        </div>
+
+                        <h4 class="control-label">Auction's ending date</h4>
+                        <div>
+                            <h4 class="control-label">@Model.EndingDate</h4>
+                        </div>
+
+                        <h4 class="control-label">Auction's price</h4>
+                        <div >
+                            <h4 class="control-label">@Model.Price</h4>
+                        </div>
+
+                    </div>
+                <div class="col-md-6">
+                    <table>
+                        <tr>
+                            <td>
+                                <label> @ViewBag.Lot.Name</label>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    @Html.ActionLink("Details", "Details", "Lot", new { lotId = ViewBag.Lot.Id }, new { @class = "btn  btn-sm btn-warning" })
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                  
+                </div>
+            </div>
+    @if (Request.IsAuthenticated)
+    {
+        <div>
+            @if ((Model.AvailabilityStatus))
+            {
+                if ((Model.Type == "Simple"))
+                {
+                    @Html.ActionLink("Buy Auction", "BuyAuction", "Auction", new { auctionId = Model.Id }, new { @class = "btn btn-lg btn-success" })
+                }
+                else
+                {
+
+
+                        @Html.AntiForgeryToken()
+                        <div class="hidden">
+                            @Html.EditorFor(Model => Model.Id)
+                            @Html.EditorFor(Model => Model)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(Model => Model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(Model => Model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Add rate" class="btn btn-warning" />
+                            </div>
+                        </div>
+                        @*@Html.ActionLink("Add Rate", "AddRate", "Auction", new { auctionId = Model.Id }, new { @class = "btn btn-lg btn-success" })*@
+
+                }
+            }
+</div>
+    }
+        </div>
+ }
+
+
+    @*<div class="container col-lg-offset-1">
+        <h3>Item description</h3>
+        <p class="lead">@Model.Description</p>
+    </div>*@

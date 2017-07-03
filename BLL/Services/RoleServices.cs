@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using BLLInterface.Entities;
@@ -12,24 +13,31 @@ namespace BLL.Services
     public class RoleServices : IRoleService
     {
         private readonly IUnitOfWork uow;
-
         public RoleServices(IUnitOfWork uow)
         {
             this.uow = uow;
         }
-        public bool Exist(RoleEntity c)
+
+        public IEnumerable<RoleEntity> GetAllRoles()
         {
-            return uow.Roles.Exist(c.ToDalRole());
+            return uow.Roles
+                .GetByPredicate(r => true)
+                .Select(r => r.ToBllRole());
         }
 
-        public IEnumerable<RoleEntity> GetAll()
+        public RoleEntity GetRole(int id)
         {
-            return uow.Roles.GetAll().Select(role=>role.ToBllRole());
+            return uow.Roles
+                .GetById(id)
+                .ToBllRole();
         }
 
-        public RoleEntity GetById(int roleId)
+        public RoleEntity GetRoleUser()
         {
-            return uow.Roles.GetById(roleId).ToBllRole();
+            return uow.Roles
+                .GetByPredicate(r => r.Name == "User")
+                .First()
+                .ToBllRole();
         }
     }
 }

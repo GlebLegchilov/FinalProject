@@ -24,7 +24,7 @@ namespace Mvc.Infrastructure.Providers
                 return null;
             }
 
-            var user = new UserEntity//create mapper method
+            var user = new UserEntity
             {
                 UserName = name,
                 Password = Crypto.HashPassword(password),
@@ -32,13 +32,8 @@ namespace Mvc.Infrastructure.Providers
                 CreationDate = DateTime.Now
             };
 
-
-
-            var role = roleService.GetAll().FirstOrDefault(r => r.Name == "User");
-            if (role != null)
-            {
-                user.RoleId = role.Id;
-            }
+            user.RoleId = roleService.GetRoleUser().Id;
+           
 
             userService.CreateUser(user);
             membershipUser = GetUser(name, false);
@@ -47,7 +42,7 @@ namespace Mvc.Infrastructure.Providers
 
         public override bool ValidateUser(string name, string password)
         {
-            var user = userService.GetByName(name);
+            var user = userService.GetUser(name);
 
             if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
             {
@@ -58,10 +53,10 @@ namespace Mvc.Infrastructure.Providers
 
         public override MembershipUser GetUser(string name, bool userIsOnline)
         {
-            var user = userService.GetByName(name);
+           
 
-            if (user == null) return null;
-
+            if (!userService.IsExist(name)) return null;
+            var user = userService.GetUser(name);
             var memberUser = new MembershipUser("CustomMembershipProvider", user.UserName,
                 null, null, null, null,
                 false, false, user.CreationDate,

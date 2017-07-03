@@ -24,10 +24,12 @@
                         <nav id="navbar-collapse" class="collapse navbar-collapse">
                             <ul id="main-menu" class="nav navbar-nav">
                                 <li>@Html.ActionLink("Main", "Index", "Home")</li> 
+                                <li id="menu-item-7972" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7972">@Html.ActionLink("All auctions", "Index", "Auction")</li>
                                 <li id="menu-item-7972" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7972">@Html.ActionLink("All lots", "Index", "Lot")</li>
                                 @if (Request.IsAuthenticated)
                                 {
                                 <li id="menu-item-7972" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7972">@Html.ActionLink("Add lot", "CreateLot", "Lot")</li>
+                                <li id="menu-item-7972" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7972">@Html.ActionLink("Add auction", "CreateAuction", "Auction")</li>
                                 }
 
 

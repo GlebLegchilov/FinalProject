@@ -3,8 +3,10 @@ using BLLInterface.Entities;
 
 namespace BLLInterface.Services
 {
-    public interface IRoleService : IService<RoleEntity>
+    public interface IRoleService 
     {
-
+        RoleEntity GetRole(int id);
+        RoleEntity GetRoleUser();
+        IEnumerable<RoleEntity> GetAllRoles();
     }
 }

@@ -6,10 +6,12 @@ using DALInterface.Repository;
 using Ninject;
 using Ninject.Web.Common;
 using ORM;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DependencyResolver
 {
-    public static class ResolverConfig
+    public static class ResolverConfig 
     {
         public static void ConfigurateResolverWeb(this IKernel kernel)
         {
@@ -23,21 +25,16 @@ namespace DependencyResolver
 
         private static void Configure(IKernel kernel, bool isWeb)
         {
-            if (isWeb)
-            {
-                kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
-                kernel.Bind<DbContext>().To<EntityModel>().InRequestScope();
-            }
-            else
-            {
-                kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InSingletonScope();
-                kernel.Bind<DbContext>().To<EntityModel>().InSingletonScope();
-            }
-
+          
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InRequestScope();
+            kernel.Bind<DbContext>().To<EntityModel>().InRequestScope();
+          
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IRoleService>().To<RoleServices>();
             kernel.Bind<ILotService>().To<LotServices>();
-            kernel.Bind<ICategoryService>().To<CategoryService>();
+            kernel.Bind<IAuctionService>().To<AuctionService>();
+            kernel.Bind<IFeedbackServise>().To<IFeedbackServise>();
+            kernel.Bind<IRateService>().To<RateService>();
 
         }
     }

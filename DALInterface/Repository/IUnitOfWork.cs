@@ -10,10 +10,12 @@ namespace DALInterface.Repository
     public interface IUnitOfWork : IDisposable
     {
 
-        IUserRepository Users { get; }
+        IRepository<DalUser> Users { get; }
         IRepository<DalRole> Roles { get; }
         IRepository<DalLot> Lots { get; }
-        IRepository<DalCategory> Categorys { get; }
+        IRepository<DalAuction> Auctions { get; }
+        IRepository<DalFeedback> Feedbacks { get; }
+        IRepository<DalRate> Rates { get; }
 
         void Commit();
 

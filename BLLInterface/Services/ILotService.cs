@@ -3,15 +3,21 @@ using BLLInterface.Entities;
 
 namespace BLLInterface.Services
 {
-    public interface ILotService:IService<LotEntity>
+    public interface ILotService
     {
         void CreateLot(LotEntity entity);
         void DeleteLot(int id);
         void UdateLot(LotEntity entity);
-        void BuyLot(int id, int owner);
-        IEnumerable<LotEntity> GetPurchaseLot(string name);
 
-        IEnumerable<LotEntity> GetMyLots(string name);
+        LotEntity GetLot(int id);
+        LotEntity GetLot(string name);
+        IEnumerable<LotEntity> GetOwnerLots(int id);
+        IEnumerable<LotEntity> GetOwnerLots(string name);
+        IEnumerable<LotEntity> GetAllLots();
+
+        void BindLot(int lotId, int auctionId);
+
+        bool IsExist(int id);
 
     }
 }

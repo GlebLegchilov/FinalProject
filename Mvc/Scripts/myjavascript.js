@@ -91,6 +91,34 @@
     });
 
 
+
+    $('.addLot').submit(function (event) {
+
+        event.preventDefault();
+       
+        alert(this.LotId);
+       
+
+        var data = $(this).serialize();
+        var url = $(this).attr('action');
+
+        $.post(url, data, function (response) {
+
+            $('#lotsToAdd').empty().prepend(response);
+            alert(data);
+            $('#LotId').val(data);
+        })
+        .fail(function () {
+            alert("error");
+        });
+
+
+       
+        
+        return false;
+    });
+
+
     $('.myLotDel').submit(function (event) {
 
         event.preventDefault();

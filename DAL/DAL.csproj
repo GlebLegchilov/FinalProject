@@ -49,8 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concrete\CategoryRepository.cs" />
+    <Compile Include="Concrete\AuctionRepository.cs" />
+    <Compile Include="Concrete\DalToOrmExpressionModifier.cs" />
+    <Compile Include="Concrete\FeedbackRepository.cs" />
     <Compile Include="Concrete\LotRepository.cs" />
+    <Compile Include="Concrete\RateRepositiry.cs" />
+    <Compile Include="Concrete\Repository.cs" />
     <Compile Include="Concrete\RoleRepository.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
     <Compile Include="Concrete\UserRepository.cs" />

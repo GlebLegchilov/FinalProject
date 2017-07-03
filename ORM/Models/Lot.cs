@@ -4,22 +4,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 
-namespace ORM
+namespace ORM.Models
 {
-    public partial class Role
+    public partial class Lot : IOrmEntity
     {
-        public Role()
-        {
-            Users = new HashSet<User>();
-        }
-
         public int Id { get; set; }
-
-        [Required]
+        public int OwnerId { get; set; }
         public string Name { get; set; }
-
         public string Description { get; set; }
+        public byte[] Image { get; set; }
+        public int AuctionId { get; set; }
+      
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual Auction Auction { get; set; }
+        public virtual User Owner { get; set; }
+
     }
 }

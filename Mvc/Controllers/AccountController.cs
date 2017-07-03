@@ -97,11 +97,9 @@ namespace Mvc.Controllers
                 ModelState.AddModelError("Captcha", "Incorrect input.");
                 return View(viewModel);
             }
-            
-            var anyUser = userService.GetAll().Any(u => u.UserName.Contains(viewModel.UserName));
- 
+           
 
-            if (anyUser)
+            if (userService.IsExist(viewModel.UserName))
             {
                 ModelState.AddModelError("", "User with this address already registered.");
                 return View("Registr");
@@ -169,11 +167,13 @@ namespace Mvc.Controllers
         [Authorize]
         public ActionResult Cabinet()
         {
-            var user = userService.GetByName(User.Identity.Name).ToVMUser(roleService);
+            var user = userService.GetUser(User.Identity.Name).ToVMUser(roleService);///////////////////////исправить
             ViewBag.User = user;
-            ViewBag.PurshaseList = lotService.GetAll().Where(l => (user.Id == l.OwnerId));
+            ViewBag.PurshaseList = lotService.GetOwnerLots(user.Id);
             if (User.IsInRole("Admin"))
-                return View(userService.GetAll().Where(l=>l.UserName != user.UserName).Select(u => u.ToVMUser(roleService)));
+                return View(userService.GetAllUsers()
+                    .Where(l=>l.UserName != user.UserName)
+                    .Select(u => u.ToVMUser(roleService)));///////////////////////исправить
             return View();
         }
 
@@ -182,14 +182,14 @@ namespace Mvc.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteUser(int UserId)
         {
-            if (userService.GetByName(User.Identity.Name).Id != UserId)
+            if (userService.GetUser(User.Identity.Name).Id != UserId)
             {
-                userService.DeleteUser(userService.GetById(UserId));
+                userService.DeleteUser(UserId);
             }
-            var userList = userService.GetAll().Select(u => u.ToVMUser(roleService));
+            var userList = userService.GetAllUsers().Select(u => u.ToVMUser(roleService));///////////////////////исправить
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_UsersList", userService.GetAll().Select(u => u.ToVMUser(roleService)));
+                return PartialView("_UsersList", userList);
             }
             
             return RedirectToAction("Cabinet");

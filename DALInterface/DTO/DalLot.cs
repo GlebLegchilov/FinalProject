@@ -9,13 +9,10 @@ namespace DALInterface.DTO
     public class DalLot : IEntity
     {
         public int Id { get; set; }
-
+        public int OwnerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Price { get; set; }
-        public byte[] Image{ get; set; }
-        public int CategoryId { get; set; }
-        public int CreatorId { get; set; }
-        public int OwnerId { get; set; }
+        public byte[] Image { get; set; }
+        public int AuctionId { get; set; }
     }
 }

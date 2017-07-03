@@ -3,13 +3,26 @@ using BLLInterface.Entities;
 
 namespace BLLInterface.Services
 {
-    public interface IUserService:IService<UserEntity>
+    public interface IUserService
     {
-        UserEntity GetByName(string name);
+   
+        UserEntity GetUser(int id);
+
+        UserEntity GetUser(string name);
+
+        IEnumerable<UserEntity> GetAllUsers();
+
         int GetUserId(string name);
+
         void CreateUser(UserEntity user);
-        void DeleteUser(UserEntity user);
-        bool Exist(string name);
+
+        void DeleteUser(int id);
+
+        void UpdateUser(UserEntity user);
+
+        bool IsExist(int id);
+
+        bool IsExist(string name);
 
     }
 }

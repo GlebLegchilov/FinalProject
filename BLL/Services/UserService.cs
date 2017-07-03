@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using BLLInterface.Entities;
 using BLLInterface.Services;
 using BLL.Mappers;
 using DALInterface.Repository;
+using System.Linq.Expressions;
 
 namespace BLL.Services
 {
@@ -17,44 +19,63 @@ namespace BLL.Services
             this.uow = uow;
         }
 
-        public UserEntity GetById(int id)
-        {
-            return uow.Users.GetById(id).ToBllUser();
-        }
-        public bool Exist(string name)
-        {
-            return uow.Users.Exist(uow.Users.GetByName(name));
-        }
-        public bool Exist(UserEntity c)
-        {
-            return uow.Users.Exist(c.ToDalUser());
-        }
-
-        public UserEntity GetByName(string name)
-        {
-
-            return uow.Users.GetByName(name).ToBllUser();
-        }
-        public int GetUserId(string name)
-        {
-            return uow.Users.GetByName(name).ToBllUser().Id;
-        }
-
-        public IEnumerable<UserEntity> GetAll()
-        {
-            return uow.Users.GetAll().Select(user => user.ToBllUser());
-        }
-
         public void CreateUser(UserEntity user)
         {
             uow.Users.Create(user.ToDalUser());
             uow.Commit();
         }
 
-        public void DeleteUser(UserEntity user)
+        public void DeleteUser(int id)
         {
-            uow.Users.Delete(user.ToDalUser());
+            uow.Users.Delete(id);
             uow.Commit();
+        }
+        public void UpdateUser(UserEntity user)
+        {
+            uow.Users.Update(user.ToDalUser());
+            uow.Commit();
+        }
+
+        //public bool Exist(Expression<Func<TDalEntity, bool>> predicate)
+        //{
+        //    return uow.Users.Exist(predicate);
+        //}
+
+        public IEnumerable<UserEntity> GetAllUsers()
+        {
+            return uow.Users.GetByPredicate(u => true)
+                .Select(u => u.ToBllUser());
+        }
+
+        public UserEntity GetUser(string name)
+        {
+            return uow.Users.GetByPredicate(u => u.Name == name)
+               .First()
+               .ToBllUser();
+        }
+
+        public UserEntity GetUser(int id)
+        {
+            return uow.Users.GetByPredicate(u => u.Id == id)
+                .First()
+                .ToBllUser();
+        }
+
+        public int GetUserId(string name)
+        {
+            return uow.Users.GetByPredicate(u => u.Name == name)
+              .First()
+              .ToBllUser()
+              .Id; 
+        }
+
+        public bool IsExist(int id)
+        {
+            return uow.Users.Exist(u=>u.Id==id);
+        }
+        public bool IsExist(string name )
+        {
+            return uow.Users.Exist(u => u.Name == name);
         }
     }
 }

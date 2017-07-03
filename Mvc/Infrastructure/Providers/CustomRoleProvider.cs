@@ -19,11 +19,11 @@ namespace Mvc.Infrastructure.Providers
         public override bool IsUserInRole(string name, string roleName)
         {
 
-            UserEntity user = userService.GetAll().FirstOrDefault(u => u.UserName == name);
+            UserEntity user = userService.GetAllUsers().FirstOrDefault(u => u.UserName == name);
 
             if (user == null) return false;
 
-            RoleEntity userRole = roleService.GetById(user.RoleId);
+            RoleEntity userRole = roleService.GetRole(user.RoleId);
 
             if (userRole != null && userRole.Name == roleName)
             {
@@ -36,11 +36,11 @@ namespace Mvc.Infrastructure.Providers
         public override string[] GetRolesForUser(string name)
         {
             var roles = new string[] { };
-            var user = userService.GetByName(name);
+            var user = userService.GetUser(name);
 
             if (user == null) return roles;
 
-            var userRole = roleService.GetById(user.RoleId);
+            var userRole = roleService.GetRole(user.RoleId);
 
             if (userRole != null)
             {

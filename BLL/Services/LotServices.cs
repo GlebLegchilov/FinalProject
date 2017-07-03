@@ -6,6 +6,7 @@ using BLLInterface.Services;
 using BLL.Mappers;
 using DALInterface.Repository;
 using DALInterface.DTO;
+using System;
 
 namespace BLL.Services
 {
@@ -18,62 +19,71 @@ namespace BLL.Services
             this.uow = uow;
         }
 
-        public bool Exist(LotEntity lot)
+        public void BindLot(int lotId, int auctionId)
         {
-            return uow.Lots.Exist(lot.ToDalLot());
+            var lot = uow.Lots.GetById(lotId);
+            lot.AuctionId = auctionId;
+            uow.Lots.Update(lot);
+            uow.Commit();
         }
 
-        public LotEntity GetById(int id)
+        public void CreateLot(LotEntity entity)
         {
-            return uow.Lots.GetById(id).ToBllLot();
-        }
-
-
-        public IEnumerable<LotEntity> GetAll()
-        {
-            return uow.Lots.GetAll().Select(lot => lot.ToBllLot());
-        }
-
-        public void CreateLot(LotEntity lot)
-        {
-           
-
-            
-            uow.Lots.Create(lot.ToDalLot());
+            uow.Lots.Create(entity.ToDalLot());
             uow.Commit();
         }
 
         public void DeleteLot(int id)
         {
-            uow.Lots.Delete(uow.Lots.GetById(id));
+            uow.Lots.Delete(id);
             uow.Commit();
         }
 
-        public void UdateLot(LotEntity lot)
+        public IEnumerable<LotEntity> GetAllLots()
         {
-            uow.Lots.Update(lot.ToDalLot());
+            return uow.Lots.GetByPredicate(l=>true).Select(l=>l.ToBllLot());
+        }
+
+        public LotEntity GetLot(string name)
+        {
+            return uow.Lots
+                .GetByPredicate(l=>l.Name == name)
+                .First()
+                .ToBllLot();
+        }
+
+        public LotEntity GetLot(int id)
+        {
+            return uow.Lots.GetById(id).ToBllLot();
+        }
+
+        public IEnumerable<LotEntity> GetOwnerLots(int id)
+        {
+            return uow.Lots
+                .GetByPredicate(l=>l.OwnerId == id)
+                .Select(l=>l.ToBllLot());
+        }
+
+        public IEnumerable<LotEntity> GetOwnerLots(string name)
+        {
+            var id =  uow.Users.GetByPredicate(u => u.Name == name)
+               .First()
+               .ToBllUser()
+               .Id;
+            return uow.Lots
+                .GetByPredicate(l => l.OwnerId == id)
+                .Select(l => l.ToBllLot());
+        }
+
+        public bool IsExist(int id)
+        {
+            return uow.Lots.Exist(l=>l.Id == id);
+        }
+
+        public void UdateLot(LotEntity entity)
+        {
+            uow.Lots.Update(entity.ToDalLot());
             uow.Commit();
         }
-
-        public void BuyLot(int id,int owner)
-        {
-            var entity = uow.Lots.GetById(id);
-            entity.OwnerId = owner;
-            uow.Lots.Update(entity);
-            uow.Commit();
-        }
-
-        public IEnumerable<LotEntity> GetPurchaseLot(string name)
-        {
-            var userId = uow.Users.GetByName(name).Id;
-            return uow.Lots.GetAll().Where(l => l.OwnerId == userId).Select(l=>l.ToBllLot()); 
-        }
-        
-        public IEnumerable<LotEntity> GetMyLots(string name)
-        {
-            var userId = uow.Users.GetByName(name).Id;
-            return uow.Lots.GetAll().Where(l => l.CreatorId == userId).Select(l => l.ToBllLot());
-        }
-
     }
 }

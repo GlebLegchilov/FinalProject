@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Mvc.Models.AuctionViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>All lots</h2>
+<hr />
+<div class="album text-muted" style="padding-top:20px">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                //if (item.OwnerId == 0) {
+                <div class="col-xs-12 col-md-6 col-lg-4">
+                    <div class="hidden">
+                        @Html.EditorFor(model => item.Id)
+                        @Html.EditorFor(model => item.CreatorId)
+                    </div>
+
+                    <div class="card" style="word-wrap: break-word; overflow: hidden;" height 100px;">
+                       
+                        <p class="card-text"><h3>@Html.ActionLink(item.Name, "Details", "Auction", new { auctionId = item.Id }, null)</h3></p>
+                        <div>
+                            <p class="card-text main" style="height: 30px;">@item.EndingDate</p>
+                        </div>
+                    </div>
+                </div>
+                @*}*@
+            }
+
+        </div>
+    </div>
+</div>
+
+<script src="jquery.dotdotdot.min.js"></script>
+<script>
+$(function(){
+  $('.main').dotdotdot();
+});
+</script>

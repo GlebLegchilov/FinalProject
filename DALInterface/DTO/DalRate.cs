@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace DALInterface.DTO
 {
-    public class DalCategory : IEntity
+    public class DalRate:IEntity
     {
         public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
+        public int UserId { get; set; }
+        public int AuctionId { get; set; }
+        public decimal Value { get; set; }
     }
 }
